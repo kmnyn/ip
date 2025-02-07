@@ -93,4 +93,4 @@ public class Kate {
     }
 }
 
-// Following the coding standard
+// Following the code quality topics
