@@ -93,3 +93,5 @@ public class Kate {
         scanner.close();
     }
 }
+
+// Following the coding standard
