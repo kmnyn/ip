@@ -14,7 +14,7 @@ public class Task {
     }
 
     // Method to mark the task as not done
-    public void unmark() {
+    public void markAsNotDone() {
         this.isDone = false;
     }
 
@@ -23,8 +23,8 @@ public class Task {
         return (isDone ? "[X]" : "[ ]"); // Display [X] for done, [ ] for not done
     }
 
-    // Getter for the task description
-    public String getDescription() {
-        return description;
+    @Override
+    public String toString() {
+        return getStatusIcon() + " " + description;
     }
 }
