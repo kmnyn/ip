@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Kate {
+
     private static final int MAX_TASKS = 100;
     private static final Task[] tasks = new Task[MAX_TASKS];
     private static int taskCount = 0;
@@ -32,50 +33,35 @@ public class Kate {
                 scanner = new Scanner(System.in);
             }
 
-            while (scanner.hasNextLine()) {
-                String input = scanner.nextLine();
-                if (input.trim().isEmpty()) {
-                    continue; // Skip empty lines
-                }
+            boolean isRunning = true;
+            while (isRunning && scanner.hasNextLine()) {
+                String input = scanner.nextLine().trim(); // Trim spaces
 
-                // If the input is "bye", break out of the loop and exit
-                if (input.equalsIgnoreCase("bye")) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println("Bye. See ya!");
-                    System.out.println("____________________________________________________________");
-                    break;  // Exit the program
-                } else if (input.equals("list")) {
-                    listTasks();
-                } else if (input.startsWith("todo ")) {
-                    addTodo(input.substring(5));
-                } else if (input.startsWith("deadline ")) {
-                    String[] parts = input.substring(9).split(" /by ");
-                    addDeadline(parts[0], parts[1]);
-                } else if (input.startsWith("event ")) {
-                    String[] parts = input.substring(6).split(" /from | /to ");
-                    addEvent(parts[0], parts[1], parts[2]);
-                } else if (input.startsWith("mark ")) {
-                    markTask(Integer.parseInt(input.substring(5)) - 1);
-                } else if (input.startsWith("unmark ")) {
-                    unmarkTask(Integer.parseInt(input.substring(7)) - 1);
-                } else {
-                    System.out.println("Unknown command!");
+                if (input.isEmpty()) continue; // Skip empty lines
+
+                try {
+                    Command command = Parser.parse(input);
+                    command.execute();
+
+                    if (command instanceof ExitCommand) { // If it's an ExitCommand, stop the loop
+                        isRunning = false;
+                    }
+                } catch (KateException e) {
+                    System.out.println("⚠ ERROR: " + e.getMessage());
                 }
             }
-
         } catch (FileNotFoundException e) {
             logger.log(Level.SEVERE, "The file 'input.txt' was not found.", e);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "An unexpected error occurred.", e);
         } finally {
             if (scanner != null) {
-                scanner.close(); // Always close the scanner when done
+                scanner.close();
             }
         }
-
     }
 
-    private static void listTasks() {
+    public static void listTasks() {
         if (taskCount == 0) {
             System.out.println("Your task list is empty.");
             return;
@@ -86,25 +72,25 @@ public class Kate {
         }
     }
 
-    private static void addTodo(String description) {
+    public static void addTodo(String description) {
         tasks[taskCount++] = new Todo(description);
         System.out.println("Got it. I've added this task:\n  " + tasks[taskCount - 1]);
         System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
 
-    private static void addDeadline(String description, String by) {
+    public static void addDeadline(String description, String by) {
         tasks[taskCount++] = new Deadline(description, by);
         System.out.println("Got it. I've added this task:\n  " + tasks[taskCount - 1]);
         System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
 
-    private static void addEvent(String description, String from, String to) {
+    public static void addEvent(String description, String from, String to) {
         tasks[taskCount++] = new Event(description, from, to);
         System.out.println("Got it. I've added this task:\n  " + tasks[taskCount - 1]);
         System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
 
-    private static void markTask(int index) {
+    public static void markTask(int index) {
         if (index >= 0 && index < taskCount) {
             tasks[index].markAsDone();
             System.out.println("Nice! I've marked this task as done:\n  " + tasks[index]);
@@ -113,7 +99,7 @@ public class Kate {
         }
     }
 
-    private static void unmarkTask(int index) {
+    public static void unmarkTask(int index) {
         if (index >= 0 && index < taskCount) {
             tasks[index].markAsNotDone();
             System.out.println("OK, I've marked this task as not done yet:\n  " + tasks[index]);

@@ -18,13 +18,8 @@ public class Task {
         this.isDone = false;
     }
 
-    // Method to return the status icon based on whether the task is done
-    public String getStatusIcon() {
-        return (isDone ? "[X]" : "[ ]"); // Display [X] for done, [ ] for not done
-    }
-
     @Override
     public String toString() {
-        return getStatusIcon() + " " + description;
+        return (isDone ? "[X]" : "[ ]") + " " + description;
     }
 }
