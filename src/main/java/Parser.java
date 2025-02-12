@@ -1,0 +1,65 @@
+public class Parser {
+    public static Command parse(String input) throws KateException {
+        String[] words = input.trim().split(" ", 2);
+        String command = words[0];
+
+        return switch (command) {
+            case "todo" -> parseTodo(words);
+            case "deadline" -> parseDeadline(words);
+            case "event" -> parseEvent(words);
+            case "list" -> new ListCommand();
+            case "mark" -> parseMark(words);
+            case "unmark" -> parseUnmark(words);
+            case "bye" -> new ExitCommand();
+            default ->
+                    throw new KateException("Oops! I'm sorry, but I don't recognize that command. Please try again.");
+        };
+    }
+
+    private static Command parseTodo(String[] words) throws KateException {
+        if (words.length < 2 || words[1].isBlank()) {
+            throw new KateException("Oops! Please type in a description for the todo.");
+        }
+        return new AddCommand(new Todo(words[1]));
+    }
+
+    private static Command parseDeadline(String[] words) throws KateException {
+        if (words.length < 2 || words[1].isBlank()) {
+            throw new KateException("Oops! Please type in a description for the deadline.");
+        }
+        String[] deadlineParts = words[1].split(" /by ", 2);
+        if (deadlineParts.length < 2) {
+            throw new KateException("Oops! Please include a due date for the deadline.");
+        }
+        return new AddCommand(new Deadline(deadlineParts[0], deadlineParts[1]));
+    }
+
+    private static Command parseEvent(String[] words) throws KateException {
+        if (words.length < 2 || words[1].isBlank()) {
+            throw new KateException("Oops! Please type in a description for the event.");
+        }
+        String[] eventParts = words[1].split(" /from ", 2);
+        if (eventParts.length < 2) {
+            throw new KateException("Oops! Please include a start time for the event.");
+        }
+        String[] timeParts = eventParts[1].split(" /to ", 2);
+        if (timeParts.length < 2) {
+            throw new KateException("Oops! Please include an end time for the event.");
+        }
+        return new AddCommand(new Event(eventParts[0], timeParts[0], timeParts[1]));
+    }
+
+    private static Command parseMark(String[] words) throws KateException {
+        if (words.length < 2 || !words[1].matches("\\d+")) {
+            throw new KateException("Oops! Please provide a valid task number to mark.");
+        }
+        return new MarkCommand(Integer.parseInt(words[1]) - 1);
+    }
+
+    private static Command parseUnmark(String[] words) throws KateException {
+        if (words.length < 2 || !words[1].matches("\\d+")) {
+            throw new KateException("Oops! Please provide a valid task number to unmark.");
+        }
+        return new UnmarkCommand(Integer.parseInt(words[1]) - 1);
+    }
+}
