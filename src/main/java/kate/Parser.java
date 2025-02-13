@@ -1,3 +1,18 @@
+package kate;
+
+// Importing commands
+import command.Command;
+import command.AddCommand;
+import command.ExitCommand;
+import command.ListCommand;
+import command.MarkCommand;
+import command.UnmarkCommand;
+
+// Importing tasks
+import task.Todo;
+import task.Deadline;
+import task.Event;
+
 public class Parser {
     public static Command parse(String input) throws KateException {
         String[] words = input.trim().split(" ", 2);

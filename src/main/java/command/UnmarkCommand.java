@@ -1,3 +1,7 @@
+package command;
+
+import kate.Kate;
+
 public class UnmarkCommand implements Command {
     private final int taskIndex;
 

@@ -1,8 +1,20 @@
+package kate;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+// Importing commands
+import command.Command;
+import command.ExitCommand;
+
+// Importing tasks
+import task.Task;
+import task.Todo;
+import task.Deadline;
+import task.Event;
 
 public class Kate {
 
