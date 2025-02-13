@@ -1,3 +1,7 @@
+package command;
+
+import kate.Kate;
+
 public class MarkCommand implements Command {
     private final int taskIndex;
 

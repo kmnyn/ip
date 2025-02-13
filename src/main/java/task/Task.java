@@ -1,5 +1,7 @@
+package task;
+
 public class Task {
-    protected String description;
+    public String description;
     protected boolean isDone;
 
     // Constructor to initialize a task with a description
