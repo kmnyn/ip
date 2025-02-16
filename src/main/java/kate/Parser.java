@@ -7,6 +7,8 @@ import command.ExitCommand;
 import command.ListCommand;
 import command.MarkCommand;
 import command.UnmarkCommand;
+import command.DeleteCommand;
+
 
 // Importing tasks
 import task.Todo;
@@ -25,6 +27,7 @@ public class Parser {
             case "list" -> new ListCommand();
             case "mark" -> parseMark(words);
             case "unmark" -> parseUnmark(words);
+            case "delete" -> parseDelete(words);
             case "bye" -> new ExitCommand();
             default ->
                     throw new KateException("Oops! I'm sorry, but I don't recognize that command. Please try again.");
@@ -77,4 +80,15 @@ public class Parser {
         }
         return new UnmarkCommand(Integer.parseInt(words[1]) - 1);
     }
+
+    private static Command parseDelete(String[] words) throws KateException {
+        if (words.length < 2 || !words[1].matches("\\d+")) {
+            throw new KateException("Oops! Please provide a valid task number to delete.");
+        }
+        // Convert to 1-based index for user-friendliness
+        int taskIndex = Integer.parseInt(words[1]);
+        return new DeleteCommand(taskIndex);
+    }
+
 }
+
