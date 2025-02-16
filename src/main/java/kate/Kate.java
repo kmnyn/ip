@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.ArrayList;
 
 // Importing commands
 import command.Command;
@@ -20,11 +19,8 @@ import task.Event;
 
 public class Kate {
 
-<<<<<<< HEAD
-    public static final ArrayList<Task> tasks = new ArrayList<>();
-=======
+
     public static final List<Task> tasks = Storage.loadTasks();
->>>>>>> branch-Level-7
 
     private static final Logger logger = Logger.getLogger(Kate.class.getName());
 
@@ -78,21 +74,14 @@ public class Kate {
     }
 
     public static void listTasks() {
-<<<<<<< HEAD
-        if (tasks.isEmpty()) {
-=======
+
         if (tasks.isEmpty()) {  // Or tasks.size() == 0
->>>>>>> branch-Level-7
             System.out.println("Your task list is empty.");
             return;
         }
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-<<<<<<< HEAD
-            System.out.println((i + 1) + "." + tasks.get(i));
-=======
             System.out.println((i + 1) + "." + tasks.get(i));  // Use tasks.get(i) instead of tasks[i]
->>>>>>> branch-Level-7
         }
     }
 
@@ -100,30 +89,21 @@ public class Kate {
         tasks.add(new Todo(description));
         System.out.println("Got it. I've added this task:\n  " + tasks.get(tasks.size() - 1));
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-<<<<<<< HEAD
-=======
         Storage.saveTasks(tasks);
->>>>>>> branch-Level-7
     }
 
     public static void addDeadline(String description, String by) {
         tasks.add(new Deadline(description, by));
         System.out.println("Got it. I've added this task:\n  " + tasks.get(tasks.size() - 1));
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-<<<<<<< HEAD
-=======
         Storage.saveTasks(tasks);
->>>>>>> branch-Level-7
     }
 
     public static void addEvent(String description, String from, String to) {
         tasks.add(new Event(description, from, to));
         System.out.println("Got it. I've added this task:\n  " + tasks.get(tasks.size() - 1));
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-<<<<<<< HEAD
-=======
         Storage.saveTasks(tasks);
->>>>>>> branch-Level-7
     }
 
     public static void markTask(int index) {

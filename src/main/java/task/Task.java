@@ -25,9 +25,8 @@ public class Task {
         return this.isDone;
     }
 
-    // Setter for isDone
-    public void setDone(boolean done) {
-        this.isDone = done;
+    public String getDescription() {
+        return description;
     }
 
     @Override

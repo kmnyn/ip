@@ -1,6 +1,4 @@
-T | 0 | A
-D | 0 | B | sunday
-E | 0 | C | 2pm to 4pm
-T | 1 | D
-D | 0 | E | monday
-E | 1 | F | 1pm to 5pm
+T | 1 | A
+D | 0 | B | monday
+E | 0 | C | 2pm | 4pm
+E | 0 | D | 1pm | 2pm
