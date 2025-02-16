@@ -20,6 +20,16 @@ public class Task {
         this.isDone = false;
     }
 
+    // Getter for isDone
+    public boolean isDone() {
+        return this.isDone;
+    }
+
+    // Setter for isDone
+    public void setDone(boolean done) {
+        this.isDone = done;
+    }
+
     @Override
     public String toString() {
         return (isDone ? "[X]" : "[ ]") + " " + description;
