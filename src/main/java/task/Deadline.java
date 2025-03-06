@@ -1,20 +1,24 @@
 package task;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Deadline extends Task {
-    protected String by;
+    protected LocalDateTime deadline;
 
     public Deadline(String description, String by) {
         super(description);
-        this.by = by;
+        this.deadline = LocalDateTime.parse(by, DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"));
     }
 
-    // Getter for 'by'
-    public String getBy() {
-        return by;
+    // Getter for the deadline
+    public LocalDateTime getBy() {
+        return deadline;
     }
-
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        // Format the deadline in "MMM dd yyyy HH:mm" format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return "[D]" + super.toString() + " (by: " + deadline.format(formatter) + ")";
     }
 }

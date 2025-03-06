@@ -1,27 +1,37 @@
 package task;
 
-public class Event extends Task {
-    protected String from;
-    protected String to;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+public class Event extends Task {
+    protected LocalDateTime from;
+    protected LocalDateTime to;
+
+    // Constructor that parses the date-time strings into LocalDateTime
     public Event(String description, String from, String to) {
         super(description);
-        this.from = from;
-        this.to = to;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        this.from = LocalDateTime.parse(from, formatter);
+        this.to = LocalDateTime.parse(to, formatter);
     }
 
     // Getter for 'from'
-    public String getFrom() {
+    public LocalDateTime getFrom() {
         return from;
     }
 
     // Getter for 'to'
-    public String getTo() {
+    public LocalDateTime getTo() {
         return to;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        // Format the 'from' and 'to' times in the desired format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String fromFormatted = getFrom().format(formatter);
+        String toFormatted = getTo().format(formatter);
+
+        return "[E]" + super.toString() + " (from: " + fromFormatted + " to: " + toFormatted + ")";
     }
 }
