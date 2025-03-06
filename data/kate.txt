@@ -1,8 +1,2 @@
-E | 1 | C | 2pm | 4pm
-E | 0 | D | 1pm | 2pm
-T | 0 | task A
-T | 0 | task A
-T | 0 | 1
-T | 0 | A
-D | 1 | assignment | monday
-E | 0 | F | 2pm | 9pm
+T | 1 | B
+T | 0 | D
