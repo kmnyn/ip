@@ -40,4 +40,17 @@ public class Ui {
             System.out.println((i + 1) + ". " + tasks.get(i));
         }
     }
+
+    public void showMatchingTasks(List<Task> matchingTasks) {
+        System.out.println("    ____________________________________________________________");
+        if (matchingTasks.isEmpty()) {
+            System.out.println("     No matching tasks found.");
+        } else {
+            System.out.println("     Here are the matching tasks in your list:");
+            for (int i = 0; i < matchingTasks.size(); i++) {
+                System.out.println("     " + (i + 1) + ". " + matchingTasks.get(i));
+            }
+        }
+        System.out.println("    ____________________________________________________________");
+    }
 }

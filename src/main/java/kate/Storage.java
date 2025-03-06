@@ -6,6 +6,7 @@ import task.Deadline;
 import task.Event;
 
 import java.io.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,13 +76,19 @@ public class Storage {
     // Convert task to file string format
     private static String taskToFileString(Task task) {
         String status = task.isDone() ? "1" : "0";  // Convert task status to 1/0
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+
         if (task instanceof Todo) {
-            return "T | " + status + " | " + task.getDescription();
+            return String.format("T | %s | %s", status, task.getDescription());
         } else if (task instanceof Deadline deadline) {
-            return "D | " + status + " | " + task.getDescription() + " | " + deadline.getBy();
+            String deadlineFormatted = deadline.getBy().format(formatter);
+            return String.format("D | %s | %s | %s", status, task.getDescription(), deadlineFormatted);
         } else if (task instanceof Event event) {
-            return "E | " + status + " | " + task.getDescription() + " | " + event.getFrom() + " | " + event.getTo();
+            String fromFormatted = event.getFrom().format(formatter);  // Use getter here
+            String toFormatted = event.getTo().format(formatter);      // Use getter here
+            return String.format("E | %s | %s | %s | %s", status, task.getDescription(), fromFormatted, toFormatted);
         }
         return "";
     }
+
 }
