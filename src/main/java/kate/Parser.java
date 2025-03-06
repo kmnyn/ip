@@ -16,7 +16,18 @@ import task.Todo;
 import task.Deadline;
 import task.Event;
 
+/**
+ * The Parser class processes user input and converts it into the corresponding command.
+ */
 public class Parser {
+
+    /**
+     * Parses a user input string and returns the corresponding Command object.
+     *
+     * @param input The user input string.
+     * @return The Command object corresponding to the user input.
+     * @throws KateException If the input is invalid or unrecognized.
+     */
     public static Command parse(String input) throws KateException {
         String[] words = input.trim().split(" ", 2);
         String command = words[0];
