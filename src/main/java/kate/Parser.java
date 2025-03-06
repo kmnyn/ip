@@ -8,6 +8,7 @@ import command.ListCommand;
 import command.MarkCommand;
 import command.UnmarkCommand;
 import command.DeleteCommand;
+import command.FindCommand;
 
 
 // Importing tasks
@@ -29,6 +30,7 @@ public class Parser {
             case "unmark" -> parseUnmark(words);
             case "delete" -> parseDelete(words);
             case "bye" -> new ExitCommand();
+            case "find" -> parseFind(words);
             default ->
                     throw new KateException("Oops! I'm sorry, but I don't recognize that command. Please try again.");
         };
@@ -89,6 +91,15 @@ public class Parser {
         int taskIndex = Integer.parseInt(words[1]);
         return new DeleteCommand(taskIndex);
     }
+
+    private static Command parseFind(String[] words) throws KateException {
+        if (words.length < 2) {
+            throw new KateException("Please provide a keyword to search for.");
+        }
+        String keyword = words[1].trim();
+        return new FindCommand(keyword);  // Return FindCommand with the keyword
+    }
+
 
 }
 
