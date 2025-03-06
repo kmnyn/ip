@@ -71,14 +71,14 @@ public class Parser {
         if (words.length < 2 || !words[1].matches("\\d+")) {
             throw new KateException("Oops! Please provide a valid task number to mark.");
         }
-        return new MarkCommand(Integer.parseInt(words[1]) - 1);
+        return new MarkCommand(Integer.parseInt(words[1]));
     }
 
     private static Command parseUnmark(String[] words) throws KateException {
         if (words.length < 2 || !words[1].matches("\\d+")) {
             throw new KateException("Oops! Please provide a valid task number to unmark.");
         }
-        return new UnmarkCommand(Integer.parseInt(words[1]) - 1);
+        return new UnmarkCommand(Integer.parseInt(words[1]));
     }
 
     private static Command parseDelete(String[] words) throws KateException {

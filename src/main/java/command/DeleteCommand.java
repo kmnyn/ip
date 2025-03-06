@@ -1,32 +1,33 @@
 package command;
 
-import kate.Kate;
 import kate.KateException;
 import task.Task;
+import kate.TaskList;
+import kate.Ui;
 
 public class DeleteCommand implements Command {
-    private int taskIndex;
+    private final int taskIndex;
 
     public DeleteCommand(int taskIndex) {
         this.taskIndex = taskIndex;
     }
 
     @Override
-    public void execute() {
+    public void execute(TaskList taskList, Ui ui) {
         try {
             // Validate index
-            if (taskIndex < 1 || taskIndex > Kate.tasks.size()) {
+            if (taskIndex < 1 || taskIndex > taskList.getTasks().size()) {
                 throw new KateException("Invalid task number.");
             }
 
             // Remove task
-            Task removedTask = Kate.tasks.remove(taskIndex - 1);
+            Task removedTask = taskList.getTasks().remove(taskIndex - 1);
 
             // Display confirmation
             System.out.println("    ____________________________________________________________");
             System.out.println("     Noted. I've removed this task:");
             System.out.println("       " + removedTask);
-            System.out.println("     Now you have " + Kate.tasks.size() + " tasks in the list.");
+            System.out.println("     Now you have " + taskList.getTasks().size() + " tasks in the list.");
             System.out.println("    ____________________________________________________________");
         } catch (KateException e) {
             System.out.println("    ____________________________________________________________");

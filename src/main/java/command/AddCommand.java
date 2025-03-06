@@ -1,11 +1,11 @@
 package command;
 
-import kate.Kate;
-
 import task.Deadline;
 import task.Event;
 import task.Task;
 import task.Todo;
+import kate.TaskList;
+import kate.Ui;
 
 public class AddCommand implements Command {
     private final Task task;
@@ -15,13 +15,28 @@ public class AddCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(TaskList taskList, Ui ui) {
         if (task instanceof Todo) {
-            Kate.addTodo(task.description);
+            taskList.addTask(task);
+            System.out.println("    ____________________________________________________________");
+            System.out.println("     Got it. I've added this task:");
+            System.out.println("       " + task); // Correctly print the added task
+            System.out.println("     Now you have " + taskList.getTasks().size() + " tasks in the list.");
+            System.out.println("    ____________________________________________________________");
         } else if (task instanceof Deadline deadline) {
-            Kate.addDeadline(deadline.description, deadline.getBy());
+            taskList.addTask(task);
+            System.out.println("    ____________________________________________________________");
+            System.out.println("     Got it. I've added this task:");
+            System.out.println("       " + task); // Correctly print the added task
+            System.out.println("     Now you have " + taskList.getTasks().size() + " tasks in the list.");
+            System.out.println("    ____________________________________________________________");
         } else if (task instanceof Event event) {
-            Kate.addEvent(event.description, event.getFrom(), event.getTo());
+            taskList.addTask(task);
+            System.out.println("    ____________________________________________________________");
+            System.out.println("     Got it. I've added this task:");
+            System.out.println("       " + task); // Correctly print the added task
+            System.out.println("     Now you have " + taskList.getTasks().size() + " tasks in the list.");
+            System.out.println("    ____________________________________________________________");
         }
     }
 }
