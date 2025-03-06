@@ -1,34 +1,60 @@
 package task;
 
+/**
+ * The abstract Task class represents a task with a description and a done status.
+ * Subclasses of Task will implement specific task types like Todo, Deadline, and Event.
+ */
 public class Task {
     public String description;
     protected boolean isDone;
 
-    // Constructor to initialize a task with a description
+    /**
+     * Constructs a Task with the given description.
+     *
+     * @param description The description of the task.
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false; // Tasks are not done by default
     }
 
-    // Method to mark the task as done
+    /**
+     * Marks the task as done.
+     */
     public void markAsDone() {
         this.isDone = true;
     }
 
-    // Method to mark the task as not done
+    /**
+     * Marks the task as not done.
+     */
     public void markAsNotDone() {
         this.isDone = false;
     }
 
-    // Getter for isDone
+    /**
+     * Returns whether the task is marked as done.
+     *
+     * @return true if the task is done, false otherwise.
+     */
     public boolean isDone() {
         return this.isDone;
     }
 
+    /**
+     * Returns the description of the task.
+     *
+     * @return The description of the task.
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Returns a string representation of the task.
+     *
+     * @return A string representation of the task.
+     */
     @Override
     public String toString() {
         return (isDone ? "[X]" : "[ ]") + " " + description;
