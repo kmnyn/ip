@@ -5,7 +5,12 @@ import task.Todo;
 import task.Deadline;
 import task.Event;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,24 +39,24 @@ public class Storage {
 
                 // Parse based on task type
                 switch (type) {
-                case "T" -> {
-                    Todo todo = new Todo(description);
-                    if (isDone) todo.markAsDone();
-                    tasks.add(todo);
-                }
-                case "D" -> {
-                    String by = parts[3];  // Due date for the deadline
-                    Deadline deadline = new Deadline(description, by);
-                    if (isDone) deadline.markAsDone();
-                    tasks.add(deadline);
-                }
-                case "E" -> {
-                    String from = parts[3];  // Start time for the event
-                    String to = parts.length > 4 ? parts[4] : "";  // End time for the event
-                    Event event = new Event(description, from, to);
-                    if (isDone) event.markAsDone();
-                    tasks.add(event);
-                }
+                    case "T" -> {
+                        Todo todo = new Todo(description);
+                        if (isDone) todo.markAsDone();
+                        tasks.add(todo);
+                    }
+                    case "D" -> {
+                        String by = parts[3];  // Due date for the deadline
+                        Deadline deadline = new Deadline(description, by);
+                        if (isDone) deadline.markAsDone();
+                        tasks.add(deadline);
+                    }
+                    case "E" -> {
+                        String from = parts[3];  // Start time for the event
+                        String to = parts.length > 4 ? parts[4] : "";  // End time for the event
+                        Event event = new Event(description, from, to);
+                        if (isDone) event.markAsDone();
+                        tasks.add(event);
+                    }
                 }
             }
         } catch (IOException e) {
@@ -80,10 +85,14 @@ public class Storage {
 
         if (task instanceof Todo) {
             return String.format("T | %s | %s", status, task.getDescription());
-        } else if (task instanceof Deadline deadline) {
+        }
+
+        if (task instanceof Deadline deadline) {
             String deadlineFormatted = deadline.getBy().format(formatter);
             return String.format("D | %s | %s | %s", status, task.getDescription(), deadlineFormatted);
-        } else if (task instanceof Event event) {
+        }
+
+        if (task instanceof Event event) {
             String fromFormatted = event.getFrom().format(formatter);  // Use getter here
             String toFormatted = event.getTo().format(formatter);      // Use getter here
             return String.format("E | %s | %s | %s | %s", status, task.getDescription(), fromFormatted, toFormatted);

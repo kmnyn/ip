@@ -37,6 +37,10 @@ public class AddCommand implements Command {
             System.out.println("       " + task); // Correctly print the added task
             System.out.println("     Now you have " + taskList.getTasks().size() + " tasks in the list.");
             System.out.println("    ____________________________________________________________");
+        } else {
+            System.out.println("    ____________________________________________________________");
+            System.out.println("     Error: Unsupported task type.");
+            System.out.println("    ____________________________________________________________");
         }
     }
 }

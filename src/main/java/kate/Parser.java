@@ -59,6 +59,7 @@ public class Parser {
             throw new KateException("Oops! Please type in a description for the deadline.");
         }
         String[] deadlineParts = words[1].split(" /by ", 2);
+
         if (deadlineParts.length < 2) {
             throw new KateException("Oops! Please include a due date for the deadline.");
         }
@@ -70,10 +71,12 @@ public class Parser {
             throw new KateException("Oops! Please type in a description for the event.");
         }
         String[] eventParts = words[1].split(" /from ", 2);
+
         if (eventParts.length < 2) {
             throw new KateException("Oops! Please include a start time for the event.");
         }
         String[] timeParts = eventParts[1].split(" /to ", 2);
+
         if (timeParts.length < 2) {
             throw new KateException("Oops! Please include an end time for the event.");
         }
