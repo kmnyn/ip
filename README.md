@@ -1,26 +1,162 @@
-# Duke project template
+# Kate - User Guide
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Welcome to **Kate**, your personal task management chatbot! Kate helps you keep track of your tasks efficiently with simple commands. This guide will help you understand how to use Kate effectively.
 
-## Setting up in Intellij
+## Features
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+### 1. Adding a Task
+You can add three types of tasks: **To-Do, Deadline, and Event**.
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+#### To-Do Task
+- **Command:** `todo [Task Name]`
+- **Example:**
+  ```
+  todo Task A
+  ```
+  **Response:**
+  ```
+  ____________________________________________________________
+  Got it. I've added this task:
+    [T][ ] Task A
+  Now you have 1 task in the list.
+  ____________________________________________________________
+  ```
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+#### Deadline Task
+- **Command:** `deadline [Task Name] /by [dd/MM/yyyy HHmm]`
+- **Example:**
+  ```
+  deadline Task B /by 14/03/2025 2359
+  ```
+  **Response:**
+  ```
+  ____________________________________________________________
+  Got it. I've added this task:
+    [D][ ] Task B (by: 2025-03-14 23:59)
+  Now you have 2 tasks in the list.
+  ____________________________________________________________
+  ```
+
+#### Event Task
+- **Command:** `event [Task Name] /from [dd/MM/yyyy HHmm] /to [dd/MM/yyyy HHmm]`
+- **Example:**
+  ```
+  event Task C /from 13/03/2025 2359 /to 14/03/2025 2359
+  ```
+  **Response:**
+  ```
+  ____________________________________________________________
+  Got it. I've added this task:
+    [E][ ] Task C (from: 2025-03-13 23:59 to: 2025-03-14 23:59)
+  Now you have 3 tasks in the list.
+  ____________________________________________________________
+  ```
+
+---
+
+### 2. Listing All Tasks
+- **Command:** `list`
+- **Example:**
+  ```
+  list
+  ```
+  **Response:**
+  ```
+  1. [T][ ] Task A
+  2. [D][ ] Task B (by: 2025-03-14 23:59)
+  3. [E][ ] Task C (from: 2025-03-13 23:59 to: 2025-03-14 23:59)
+  ```
+
+---
+
+### 3. Deleting a Task
+- **Command:** `delete [Task Number]`
+- **Example:**
+  ```
+  delete 3
+  ```
+  **Response:**
+  ```
+  ____________________________________________________________
+  Noted. I've removed this task:
+    [E][ ] Task C (from: 2025-03-13 23:59 to: 2025-03-14 23:59)
+  Now you have 2 tasks in the list.
+  ____________________________________________________________
+  ```
+
+---
+
+### 4. Marking a Task as Done
+- **Command:** `mark [Task Number]`
+- **Example:**
+  ```
+  mark 1
+  ```
+  **Response:**
+  ```
+  ____________________________________________________________
+  Nice! I've marked this task as done:
+    [T][X] Task A
+  ____________________________________________________________
+  ```
+
+---
+
+### 5. Marking a Task as Not Done
+- **Command:** `unmark [Task Number]`
+- **Example:**
+  ```
+  unmark 1
+  ```
+  **Response:**
+  ```
+  ____________________________________________________________
+  Nice! I've unmarked this task as not done:
+    [T][ ] Task A
+  ____________________________________________________________
+  ```
+
+---
+
+### 6. Finding a Task
+- **Command:** `find [Keyword]`
+- **Example:**
+  ```
+  find B
+  ```
+  **Response:**
+  ```
+  1. [D][ ] Task B (by: 2025-03-14 23:59)
+  ```
+
+---
+
+### 7. Exiting the Program
+- **Command:** `bye`
+- **Example:**
+  ```
+  bye
+  ```
+  **Response:**
+  ```
+  Bye! Have a nice day!
+  ```
+
+---
+
+## Summary of Commands
+| Command | Description |
+|---------|-------------|
+| `todo [Task Name]` | Add a to-do task |
+| `deadline [Task Name] /by [dd/MM/yyyy HHmm]` | Add a task with a deadline |
+| `event [Task Name] /from [dd/MM/yyyy HHmm] /to [dd/MM/yyyy HHmm]` | Add an event with a start and end time |
+| `list` | Show all tasks |
+| `delete [Task Number]` | Remove a task from the list |
+| `mark [Task Number]` | Mark a task as done |
+| `unmark [Task Number]` | Mark a task as not done |
+| `find [Keyword]` | Find tasks containing a keyword |
+| `bye` | Exit the chatbot |
+
+---
+
+Thank you for using **Kate**! 🚀
