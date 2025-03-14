@@ -64,12 +64,23 @@ public class Parser {
         if (words.length < 2 || words[1].isBlank()) {
             throw new KateException("Oops! Please type in a description for the deadline.");
         }
-        String[] deadlineParts = words[1].split(" /by ", 2);
 
+        String[] deadlineParts = words[1].split(" /by ", 2);
         if (deadlineParts.length < 2) {
             throw new KateException("Oops! Please include a due date for the deadline.");
         }
-        return new AddCommand(new Deadline(deadlineParts[0], deadlineParts[1]));
+
+        String description = deadlineParts[0].trim();
+        String byDateTime = deadlineParts[1].trim();
+
+        // Validate and parse datetime
+        try {
+            LocalDateTime.parse(byDateTime, DATE_TIME_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new KateException("Invalid date format! Please enter in dd/MM/yyyy HHmm format.");
+        }
+
+        return new AddCommand(new Deadline(description, byDateTime));
     }
 
     private static Command parseEvent(String[] words) throws KateException {
