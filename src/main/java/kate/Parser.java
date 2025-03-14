@@ -16,19 +16,25 @@ import task.Todo;
 import task.Deadline;
 import task.Event;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * The Parser class processes user input and converts it into the corresponding command.
  */
 public class Parser {
 
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
     /**
      * Parses a user input string and returns the corresponding Command object.
      *
      * @param input The user input string.
+     * @param taskList The current list of tasks.
      * @return The Command object corresponding to the user input.
      * @throws KateException If the input is invalid or unrecognized.
      */
-    public static Command parse(String input) throws KateException {
+    public static Command parse(String input, TaskList taskList) throws KateException {
         String[] words = input.trim().split(" ", 2);
         String command = words[0];
 
@@ -37,9 +43,9 @@ public class Parser {
             case "deadline" -> parseDeadline(words);
             case "event" -> parseEvent(words);
             case "list" -> new ListCommand();
-            case "mark" -> parseMark(words);
-            case "unmark" -> parseUnmark(words);
-            case "delete" -> parseDelete(words);
+            case "mark" -> parseMark(words, taskList);
+            case "unmark" -> parseUnmark(words, taskList);
+            case "delete" -> parseDelete(words, taskList);
             case "bye" -> new ExitCommand();
             case "find" -> parseFind(words);
             default ->
@@ -80,29 +86,61 @@ public class Parser {
         if (timeParts.length < 2) {
             throw new KateException("Oops! Please include an end time for the event.");
         }
-        return new AddCommand(new Event(eventParts[0], timeParts[0], timeParts[1]));
+
+        String startTime = timeParts[0].trim();
+        String endTime = timeParts[1].trim();
+
+        // Validate start and end times
+        try {
+            LocalDateTime.parse(startTime, DATE_TIME_FORMATTER);
+            LocalDateTime.parse(endTime, DATE_TIME_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new KateException("Invalid date format! Please enter in dd/MM/yyyy HHmm format.");
+        }
+
+        return new AddCommand(new Event(eventParts[0], startTime, endTime));
     }
 
-    private static Command parseMark(String[] words) throws KateException {
+    private static Command parseMark(String[] words, TaskList taskList) throws KateException {
         if (words.length < 2 || !words[1].matches("\\d+")) {
             throw new KateException("Oops! Please provide a valid task number to mark.");
         }
-        return new MarkCommand(Integer.parseInt(words[1]));
+
+        int taskIndex = Integer.parseInt(words[1]);
+
+        if (taskIndex < 0 || taskIndex >= taskList.getSize() + 1) {
+            throw new KateException("Oops! Task number out of range.");
+        }
+
+        return new MarkCommand(taskIndex);
     }
 
-    private static Command parseUnmark(String[] words) throws KateException {
+    private static Command parseUnmark(String[] words, TaskList taskList) throws KateException {
         if (words.length < 2 || !words[1].matches("\\d+")) {
             throw new KateException("Oops! Please provide a valid task number to unmark.");
         }
-        return new UnmarkCommand(Integer.parseInt(words[1]));
+
+        int taskIndex = Integer.parseInt(words[1]);
+
+        if (taskIndex < 0 || taskIndex >= taskList.getSize() + 1) {
+            throw new KateException("Oops! Task number out of range.");
+        }
+
+        return new UnmarkCommand(taskIndex);
     }
 
-    private static Command parseDelete(String[] words) throws KateException {
+
+    private static Command parseDelete(String[] words, TaskList taskList) throws KateException {
         if (words.length < 2 || !words[1].matches("\\d+")) {
             throw new KateException("Oops! Please provide a valid task number to delete.");
         }
-        // Convert to 1-based index for user-friendliness
+
         int taskIndex = Integer.parseInt(words[1]);
+
+        if (taskIndex < 0 || taskIndex >= taskList.getSize() + 1) {
+            throw new KateException("Oops! Task number out of range.");
+        }
+
         return new DeleteCommand(taskIndex);
     }
 

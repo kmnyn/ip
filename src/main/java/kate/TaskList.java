@@ -45,6 +45,15 @@ public class TaskList {
         return tasks;
     }
 
+    /**
+     * Returns the number of tasks in the task list.
+     *
+     * @return The size of the task list.
+     */
+    public int getSize() {
+        return tasks.size();
+    }
+
     public List<Task> findTasks(String keyword) {
         return tasks.stream()
                 .filter(task -> task.getDescription().toLowerCase().contains(keyword.toLowerCase()))

@@ -32,7 +32,7 @@ public class Kate {
             try {
                 ui.showLine();
                 String input = ui.readCommand();
-                Command command = Parser.parse(input);
+                Command command = Parser.parse(input, taskList);
                 command.execute(taskList, ui);
                 if (command instanceof ExitCommand) {
                     isRunning = false;
