@@ -119,7 +119,7 @@ public class Parser {
 
         int taskIndex = Integer.parseInt(words[1]);
 
-        if (taskIndex < 0 || taskIndex >= taskList.getSize() + 1) {
+        if (taskIndex < 1 || taskIndex >= taskList.getSize() + 1) {
             throw new KateException("Oops! Task number out of range.");
         }
 
@@ -133,7 +133,7 @@ public class Parser {
 
         int taskIndex = Integer.parseInt(words[1]);
 
-        if (taskIndex < 0 || taskIndex >= taskList.getSize() + 1) {
+        if (taskIndex < 1 || taskIndex >= taskList.getSize() + 1) {
             throw new KateException("Oops! Task number out of range.");
         }
 
@@ -148,7 +148,7 @@ public class Parser {
 
         int taskIndex = Integer.parseInt(words[1]);
 
-        if (taskIndex < 0 || taskIndex >= taskList.getSize() + 1) {
+        if (taskIndex < 1 || taskIndex >= taskList.getSize() + 1) {
             throw new KateException("Oops! Task number out of range.");
         }
 
